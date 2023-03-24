@@ -2,10 +2,11 @@ const express = require("express");
 const res = require("express/lib/response");
 const app = express();
 const winston = require("winston")
-
+const port = 3040;
 
 // Calculator functions
 
+// Validates input as numbers
 const verifyNumbers = (n1, n2) => {
     if(isNaN(n1)){
         logger.error("n1 is incorrectly defined");
@@ -17,6 +18,7 @@ const verifyNumbers = (n1, n2) => {
     }
 }
 
+// Calculator maths functions
 const add = (n1, n2) => {
     return n1+n2;
 }
@@ -31,7 +33,6 @@ const divide = (n1, n2) => {
 }
 
 // Winston logging 
-
 const logger = winston.createLogger({
     level: 'info',
     format: winston.format.json(),
@@ -58,8 +59,9 @@ if (process.env.NODE_ENV !== 'production') {
 
 // Calculator endpoints
 
+// Add endpoint adds 2 numbers
+// Example command to make the app work
 // http://localhost:3040/add?n1=1&n2=3
-
 app.get("/add", (req,res) => {
     try {
         const n1 = parseFloat(req.query.n1);
@@ -77,6 +79,9 @@ app.get("/add", (req,res) => {
     } 
 });
 
+// Subtract endpoint subtracts the second number from the first
+// Example command to make the app work
+// http://localhost:3040/subtract?n1=1&n2=3
 app.get("/subtract", (req,res) => {
     try {
         const n1 = parseFloat(req.query.n1);
@@ -94,6 +99,9 @@ app.get("/subtract", (req,res) => {
     } 
 });
 
+// Multiply endpoint multiplies 2 numbers
+// Example command to make the app work
+// http://localhost:3040/multiply?n1=1&n2=3
 app.get("/multiply", (req,res) => {
     try {
         const n1 = parseFloat(req.query.n1);
@@ -111,6 +119,9 @@ app.get("/multiply", (req,res) => {
     } 
 });
 
+// Divide endpoint divides the first number by the second
+// Example command to make the app work
+// http://localhost:3040/divide?n1=1&n2=3
 app.get("/divide", (req,res) => {
     try {
         const n1 = parseFloat(req.query.n1);
@@ -133,7 +144,8 @@ app.get("/divide", (req,res) => {
     } 
 });
 
-const port = 3040;
+
+// Start the server
 
 app.listen(port, () => {
     console.log("hello i'm listening to port " + port);
